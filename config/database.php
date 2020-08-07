@@ -4,8 +4,8 @@ use Illuminate\Support\Str;
 //heroku seeting
 $url = parse_url(getenv("DATABASE_URL"));
 $post = $url["host"] ?? null;
-$username = $url["user"];
-$password = substr($url["path"], 1);
+$username = $url["user"] ?? null;
+$password = substr($url["path"], 1) ?? null;
 //end here
 
 return [
