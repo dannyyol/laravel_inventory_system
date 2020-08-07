@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Str;
+
 //heroku seeting
-$url = parse_url(getenv("DATABASE_URL"));
+$url = "postgres://czkqvfkrhfbrmw:9c777dc758e94057e50bf91d75fb54e29e7e5c3ef5f943582993884e760265d6@ec2-34-234-228-127.compute-1.amazonaws.com:5432/d80ib7o14g384t";
 $post = $url["host"] ?? null;
 $username = $url["user"] ?? null;
 $password = substr($url["path"], 1) ?? null;
