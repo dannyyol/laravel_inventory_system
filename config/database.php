@@ -3,10 +3,10 @@
 use Illuminate\Support\Str;
 
 //heroku seeting
-$url = "postgres://czkqvfkrhfbrmw:9c777dc758e94057e50bf91d75fb54e29e7e5c3ef5f943582993884e760265d6@ec2-34-234-228-127.compute-1.amazonaws.com:5432/d80ib7o14g384t";
-$post = $url["host"] ?? null;
-$username = $url["user"] ?? null;
-$password = substr($url["path"], 1) ?? null;
+// $url = parse_url(getenv("DATABASE_URL"));
+// $post = $url["host"] ?? null;
+// $username = $url["user"] ?? null;
+// $password = substr($url["path"], 1) ?? null;
 //end here
 
 return [
@@ -22,8 +22,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'pgsql_production'),
-    // 'default' => env('DB_CONNECTION', 'mysql'),
+    // 'default' => env('DB_CONNECTION', 'pgsql_production'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 //
 
     /*
@@ -87,19 +87,19 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'pgsql_production' => [
-            'driver' => 'pgsql',
-            'host' => $host,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'schema' => 'public',
-            'sslmode' => 'prefer',
+        // 'pgsql_production' => [
+        //     'driver' => 'pgsql',
+        //     'host' => $host,
+        //     'database' => $database,
+        //     'username' => $username,
+        //     'password' => $password,
+        //     'charset' => 'utf8',
+        //     'prefix' => '',
+        //     'prefix_indexes' => true,
+        //     'schema' => 'public',
+        //     'sslmode' => 'prefer',
 
-        ],
+        // ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
