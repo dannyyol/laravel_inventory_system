@@ -182,7 +182,8 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
 
@@ -230,7 +231,7 @@
        .catch(error =>this.errors = error.response.data.errors)
      },
   },
-  created(){
+  mounted(){
     axios.get('/api/category/')
     .then(({data}) => (this.categories = data))
 

@@ -52,7 +52,7 @@
 
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Salary" v-model="form.sallary">
+                                    <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Salary" v-model="form.salary">
                                     <small class="text-danger" v-if="errors.salary"> {{ errors.salary[0] }} </small>
                                 </div>     
                                         
@@ -167,7 +167,7 @@
       errors:{}
     }
   },
-  created(){
+  mounted(){
   	let id = this.$route.params.id
   	axios.get('/api/employee/'+id)
   	.then(({data}) => (this.form = data))

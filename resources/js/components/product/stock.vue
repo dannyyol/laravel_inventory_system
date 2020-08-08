@@ -74,7 +74,8 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
     data(){
@@ -99,7 +100,7 @@
     }   
 
   },
-  created(){
+  mounted(){
     this.allProduct();
   } 
   

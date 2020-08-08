@@ -79,9 +79,11 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
+
 
     data(){
     return {
@@ -94,7 +96,7 @@
       errors:{},
     }
   },
-  created(){
+  mounted(){
   	let id = this.$route.params.id
   	axios.get('/api/expense/'+id)
   	.then(({data}) => (this.form = data))

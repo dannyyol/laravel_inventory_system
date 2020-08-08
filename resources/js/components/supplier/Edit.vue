@@ -52,7 +52,7 @@
 
 
      <div class="col-md-6">
-         <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Sallery" v-model="form.shopname">
+         <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your salary" v-model="form.shopname">
          <small class="text-danger" v-if="errors.shopname"> {{ errors.shopname[0] }} </small>
             </div>     
             
@@ -132,7 +132,8 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
 
@@ -151,7 +152,7 @@
       errors:{}
     }
   },
-  created(){
+  mounted(){
   	let id = this.$route.params.id
   	axios.get('/api/supplier/'+id)
   	.then(({data}) => (this.form = data))

@@ -167,7 +167,8 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
 
@@ -179,7 +180,7 @@
       details:{},
     }
   },
-  created(){
+  mounted(){
   	let id = this.$route.params.id
   	axios.get('/api/order/details/'+id)
   	.then(({data}) => (this.orders = data))

@@ -1,12 +1,12 @@
 
 
 <template>
-  
+
   <div>
 
  <div class="row">
   <router-link to="/store-employee" class="btn btn-primary">Add Employee </router-link>
-   
+
  </div>
 <br>
    <input type="text" v-model="searchTerm" class="form-control" style="width: 300px;" placeholder="Search Here">
@@ -38,7 +38,7 @@
                         <td> {{ employee.name }} </td>
                         <td><img :src="employee.photo" id="em_photo"></td>
                         <td>{{ employee.phone }}</td>
-                        <td>{{ employee.sallary }}</td>
+                        <td>{{ employee.salary }}</td>
                         <td>{{ employee.joining_date }}</td>
             <td>
    <router-link :to="{name: 'edit-employee', params:{id:employee.id}}" class="btn btn-sm btn-primary">Edit</router-link>
@@ -46,7 +46,7 @@
  <a @click="deleteEmployee(employee.id)" class="btn btn-sm btn-danger"><font color="#ffffff">Delete</font></a>
             </td>
                       </tr>
-                    
+
                     </tbody>
                   </table>
                 </div>
@@ -57,7 +57,7 @@
           <!--Row-->
 
 
-   
+
   </div>
 
 
@@ -66,10 +66,11 @@
 
 
 <script type="text/javascript">
-  
+
   export default {
     created(){
       if (!User.loggedIn()) {
+        console.log("User not login");
         this.$router.push({name: 'login'})
       }
     },
@@ -83,10 +84,10 @@
       filtersearch(){
       return this.employees.filter(employee => {
          return employee.name.match(this.searchTerm)
-      }) 
+      })
       }
     },
- 
+
     methods:{
       allEmployee(){
         axios.get('/api/employee/')
@@ -120,14 +121,14 @@
           )
         }
       })
-    } 
+    }
   },
-  created(){
+  mounted(){
     this.allEmployee();
-  } 
-  
+  }
 
-} 
+
+}
 </script>
 
 

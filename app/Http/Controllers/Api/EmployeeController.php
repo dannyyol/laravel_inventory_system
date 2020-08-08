@@ -46,43 +46,43 @@ class EmployeeController extends Controller
             'name' => 'required|unique:employees|max:255',
             'email' => 'required',
             'phone' => 'required|unique:employees',
-   
+
            ]);
-   
+
          if ($request->photo) {
             $position = strpos($request->photo, ';');
             $sub = substr($request->photo, 0, $position);
             $ext = explode('/', $sub)[1];
-   
+
             $name = time().".".$ext;
             $img = Image::make($request->photo)->resize(240,200);
             $upload_path = 'backend/employee/';
             $image_url = $upload_path.$name;
             $img->save($image_url);
-   
+
             $employee = new Employee;
             $employee->name = $request->name;
             $employee->email = $request->email;
             $employee->phone = $request->phone;
-            $employee->sallary = $request->sallery;
+            $employee->salary = $request->salary;
             $employee->address = $request->address;
             $employee->nid = $request->nid;
             $employee->joining_date = $request->joining_date;
             $employee->photo = $image_url;
-            $employee->save(); 
+            $employee->save();
         }else{
            $employee = new Employee;
             $employee->name = $request->name;
             $employee->email = $request->email;
             $employee->phone = $request->phone;
-            $employee->sallary = $request->sallery;
+            $employee->salary = $request->salary;
             $employee->address = $request->address;
             $employee->nid = $request->nid;
             $employee->joining_date = $request->joining_date;
-            
-            $employee->save(); 
-   
-        } 
+
+            $employee->save();
+
+        }
     }
 
     /**
@@ -123,7 +123,7 @@ class EmployeeController extends Controller
         $data['name'] = $request->name;
         $data['email'] = $request->email;
         $data['phone'] = $request->phone;
-        $data['sallary'] = $request->sallary;
+        $data['salary'] = $request->salary;
         $data['address'] = $request->address;
         $data['nid'] = $request->nid;
         $data['joining_date'] = $request->joining_date;
@@ -139,7 +139,7 @@ class EmployeeController extends Controller
          $upload_path = 'backend/employee/';
          $image_url = $upload_path.$name;
          $success = $img->save($image_url);
-         
+
          if ($success) {
             $data['photo'] = $image_url;
             $img = DB::table('employees')->where('id',$id)->first();
@@ -147,7 +147,7 @@ class EmployeeController extends Controller
             $done = unlink($image_path);
             $user  = DB::table('employees')->where('id',$id)->update($data);
          }
-          
+
         }else{
             $oldphoto = $request->photo;
             $data['photo'] = $oldphoto;

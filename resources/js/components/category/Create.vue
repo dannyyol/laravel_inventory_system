@@ -1,12 +1,12 @@
- 
+
 
 <template>
-  
+
   <div>
 
  <div class="row">
   <router-link to="/category" class="btn btn-primary">All Category </router-link>
-   
+
  </div>
 
 
@@ -30,22 +30,22 @@
                         <div class="col-md-12">
                           <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Category Name" v-model="form.category_name">
                           <small class="text-danger" v-if="errors.category_name"> {{ errors.category_name[0] }} </small>
-           
 
-                        </div> 
-                        
+
+                        </div>
+
                       </div>
                     </div>
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">Submit</button>
                   </div>
-                  
+
                 </form>
                   <hr>
                   <div class="text-center">
-  
-  
+
+
                   </div>
                   <div class="text-center">
                   </div>
@@ -64,26 +64,27 @@
 
 
 <script type="text/javascript">
-  
+
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
-      }
+        console.log("User not login");
+        this.$router.push({name: 'login'})
+        }
     },
 
     data(){
     return {
       form:{
         category_name: null
-        
+
       },
       errors:{}
     }
   },
 
   methods:{
-    
+
   categoryInsert(){
        axios.post('/api/category',this.form)
        .then(() => {
@@ -92,14 +93,14 @@
        })
        .catch(error =>this.errors = error.response.data.errors)
      },
-  } 
+  }
 
 
   }
-   
+
 </script>
 
 
 <style type="text/css">
-  
+
 </style>

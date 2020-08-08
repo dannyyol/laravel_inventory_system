@@ -67,7 +67,8 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
 
@@ -81,7 +82,7 @@
       errors:{}
     }
   },
-  created(){
+  mounted(){
   	let id = this.$route.params.id
   	axios.get('/api/category/'+id)
   	.then(({data}) => (this.form = data))

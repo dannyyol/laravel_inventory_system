@@ -2512,8 +2512,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -2553,10 +2554,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2621,11 +2618,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -2636,31 +2634,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       errors: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/category/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {
-  categoryUpdate: function categoryUpdate() {
-    var _this2 = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.patch('/api/category/' + id, this.form).then(function () {
-      _this2.$router.push({
-        name: 'category'
-      });
+    axios.get('/api/category/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {
+    categoryUpdate: function categoryUpdate() {
+      var _this2 = this;
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this2.errors = error.response.data.errors;
-    });
+      var id = this.$route.params.id;
+      axios.patch('/api/category/' + id, this.form).then(function () {
+        _this2.$router.push({
+          name: 'category'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -2673,8 +2673,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2735,11 +2733,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -2793,10 +2792,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
+  },
+  mounted: function mounted() {
+    this.allCategory();
   }
-}, "created", function created() {
-  this.allCategory();
-}));
+});
 
 /***/ }),
 
@@ -3477,6 +3477,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
         name: 'login'
       });
@@ -3488,7 +3489,7 @@ __webpack_require__.r(__webpack_exports__);
         name: null,
         email: null,
         phone: null,
-        sallery: null,
+        salary: null,
         address: null,
         photo: null,
         nid: null,
@@ -3547,10 +3548,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -3695,7 +3692,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
       this.$router.push({
@@ -3718,48 +3715,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       errors: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/employee/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {
-  onFileSelected: function onFileSelected(event) {
-    var _this2 = this;
-
-    var file = event.target.files[0];
-
-    if (file.size > 1048770) {
-      Notification.image_validation();
-    } else {
-      var reader = new FileReader();
-
-      reader.onload = function (event) {
-        _this2.form.newphoto = event.target.result;
-      };
-
-      reader.readAsDataURL(file);
-    }
   },
-  employeeUpdate: function employeeUpdate() {
-    var _this3 = this;
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.patch('/api/employee/' + id, this.form).then(function () {
-      _this3.$router.push({
-        name: 'employee'
-      });
+    axios.get('/api/employee/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {
+    onFileSelected: function onFileSelected(event) {
+      var _this2 = this;
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this3.errors = error.response.data.errors;
-    });
+      var file = event.target.files[0];
+
+      if (file.size > 1048770) {
+        Notification.image_validation();
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+          _this2.form.newphoto = event.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    employeeUpdate: function employeeUpdate() {
+      var _this3 = this;
+
+      var id = this.$route.params.id;
+      axios.patch('/api/employee/' + id, this.form).then(function () {
+        _this3.$router.push({
+          name: 'employee'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this3.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -3772,8 +3771,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -3841,9 +3838,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
         name: 'login'
       });
@@ -3899,10 +3897,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
+  },
+  mounted: function mounted() {
+    this.allEmployee();
   }
-}, "created", function created() {
-  this.allEmployee();
-}));
+});
 
 /***/ }),
 
@@ -3994,8 +3993,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -4036,10 +4036,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -4116,11 +4112,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -4132,31 +4129,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       errors: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/expense/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {
-  expenseUpdate: function expenseUpdate() {
-    var _this2 = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.patch('/api/expense/' + id, this.form).then(function () {
-      _this2.$router.push({
-        name: 'expense'
-      });
+    axios.get('/api/expense/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {
+    expenseUpdate: function expenseUpdate() {
+      var _this2 = this;
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this2.errors = error.response.data.errors;
-    });
+      var id = this.$route.params.id;
+      axios.patch('/api/expense/' + id, this.form).then(function () {
+        _this2.$router.push({
+          name: 'expense'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -4169,8 +4168,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -4235,11 +4232,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -4293,10 +4291,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
+  },
+  mounted: function mounted() {
+    this.allExpense();
   }
-}, "created", function created() {
-  this.allExpense();
-}));
+});
 
 /***/ }),
 
@@ -4309,8 +4308,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -4374,11 +4371,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -4406,10 +4404,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return _this2.orders = data;
       })["catch"]();
     }
+  },
+  mounted: function mounted() {
+    this.allOrder();
   }
-}, "created", function created() {
-  this.allOrder();
-}));
+});
 
 /***/ }),
 
@@ -4543,7 +4542,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     if (!User.loggedIn()) {
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -4581,10 +4580,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -4749,11 +4744,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -4763,20 +4759,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       orders: {},
       details: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
-  var id = this.$route.params.id;
-  axios.get('/api/order/details/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.orders = data;
-  })["catch"](console.log('error'));
-  axios.get('/api/order/orderdetails/' + id).then(function (_ref2) {
-    var data = _ref2.data;
-    return _this.details = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {}), _created$data$created);
+    var id = this.$route.params.id;
+    axios.get('/api/order/details/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.orders = data;
+    })["catch"](console.log('error'));
+    axios.get('/api/order/orderdetails/' + id).then(function (_ref2) {
+      var data = _ref2.data;
+      return _this.details = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {}
+});
 
 /***/ }),
 
@@ -4789,10 +4787,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$created$data;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -5015,173 +5009,178 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$created$data = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
-  }
-}, _defineProperty(_created$created$data, "created", function created() {
-  var _this = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
-  this.allProduct();
-  this.allCategory();
-  this.allCustomer();
-  this.cartProduct();
-  this.vat();
-  Reload.$on('AfterAction', function () {
-    _this.cartProduct();
-  });
-}), _defineProperty(_created$created$data, "data", function data() {
-  return {
-    customer_id: '',
-    pay: '',
-    due: '',
-    payby: '',
-    products: [],
-    categories: '',
-    getproducts: [],
-    searchTerm: '',
-    getsearchTerm: '',
-    customers: '',
-    errors: '',
-    carts: [],
-    vats: ''
-  };
-}), _defineProperty(_created$created$data, "computed", {
-  filtersearch: function filtersearch() {
-    var _this2 = this;
-
-    return this.products.filter(function (product) {
-      return product.product_name.match(_this2.searchTerm);
+    this.allProduct();
+    this.allCategory();
+    this.allCustomer();
+    this.cartProduct();
+    this.vat();
+    Reload.$on('AfterAction', function () {
+      _this.cartProduct();
     });
   },
-  getfiltersearch: function getfiltersearch() {
-    var _this3 = this;
-
-    return this.getproducts.filter(function (getproduct) {
-      return getproduct.product_name.match(_this3.getsearchTerm);
-    });
-  },
-  qty: function qty() {
-    var sum = 0;
-
-    for (var i = 0; i < this.carts.length; i++) {
-      sum += parseFloat(this.carts[i].product_quantity);
-      console.log(i++);
-    }
-
-    return sum;
-  },
-  subtotal: function subtotal() {
-    var sum = 0;
-
-    for (var i = 0; i < this.carts.length; i++) {
-      sum += parseFloat(this.carts[i].product_quantity) * parseFloat(this.carts[i].product_price);
-    }
-
-    return sum;
-  }
-}), _defineProperty(_created$created$data, "methods", {
-  // Cart Methods Here
-  AddToCart: function AddToCart(id) {
-    axios.get('/api/add-to-cart/' + id).then(function () {
-      Reload.$emit('AfterAction');
-      Notification.cart_success();
-    })["catch"]();
-  },
-  cartProduct: function cartProduct() {
-    var _this4 = this;
-
-    axios.get('/api/cart/product/').then(function (_ref) {
-      var data = _ref.data;
-      return _this4.carts = data;
-    })["catch"]();
-  },
-  removeItem: function removeItem(id) {
-    axios.get('/api/remove/cart/' + id).then(function () {
-      Reload.$emit('AfterAction');
-      Notification.cart_delete();
-    })["catch"]();
-  },
-  increment: function increment(id) {
-    axios.get('/api/increment/' + id).then(function () {
-      Reload.$emit('AfterAction');
-      Notification.success();
-    })["catch"]();
-  },
-  decrement: function decrement(id) {
-    axios.get('/api/decrement/' + id).then(function () {
-      Reload.$emit('AfterAction');
-      Notification.success();
-    })["catch"]();
-  },
-  vat: function vat() {
-    var _this5 = this;
-
-    axios.get('/api/vats/').then(function (_ref2) {
-      var data = _ref2.data;
-      return _this5.vats = data;
-    })["catch"]();
-  },
-  orderdone: function orderdone() {
-    var _this6 = this;
-
-    var total = this.subtotal * this.vats.vat / 100 + this.subtotal;
-    var data = {
-      qty: this.qty,
-      subtotal: this.subtotal,
-      customer_id: this.customer_id,
-      payby: this.payby,
-      pay: this.pay,
-      due: this.due,
-      vat: this.vats.vat,
-      total: total
+  data: function data() {
+    return {
+      customer_id: '',
+      pay: '',
+      due: '',
+      payby: '',
+      products: [],
+      categories: '',
+      getproducts: [],
+      searchTerm: '',
+      getsearchTerm: '',
+      customers: '',
+      errors: '',
+      carts: [],
+      vats: ''
     };
-    axios.post('/api/order', data).then(function () {
-      Notification.success();
+  },
+  computed: {
+    filtersearch: function filtersearch() {
+      var _this2 = this;
 
-      _this6.$router.push({
-        name: 'home'
+      return this.products.filter(function (product) {
+        return product.product_name.match(_this2.searchTerm);
       });
-    });
-  },
-  // End Cart Methods
-  allProduct: function allProduct() {
-    var _this7 = this;
+    },
+    getfiltersearch: function getfiltersearch() {
+      var _this3 = this;
 
-    axios.get('/api/product/').then(function (_ref3) {
-      var data = _ref3.data;
-      return _this7.products = data;
-    })["catch"]();
-  },
-  allCategory: function allCategory() {
-    var _this8 = this;
+      return this.getproducts.filter(function (getproduct) {
+        return getproduct.product_name.match(_this3.getsearchTerm);
+      });
+    },
+    qty: function qty() {
+      var sum = 0;
 
-    axios.get('/api/category/').then(function (_ref4) {
-      var data = _ref4.data;
-      return _this8.categories = data;
-    })["catch"]();
-  },
-  allCustomer: function allCustomer() {
-    var _this9 = this;
+      for (var i = 0; i < this.carts.length; i++) {
+        sum += parseFloat(this.carts[i].product_quantity);
+        console.log(i++);
+      }
 
-    axios.get('/api/customer/').then(function (_ref5) {
-      var data = _ref5.data;
-      return _this9.customers = data;
-    })["catch"](console.log('error'));
-  },
-  subproduct: function subproduct(id) {
-    var _this10 = this;
+      return sum;
+    },
+    subtotal: function subtotal() {
+      var sum = 0;
 
-    axios.get('/api/category/product/' + id).then(function (_ref6) {
-      var data = _ref6.data;
-      return _this10.getproducts = data;
-    })["catch"]();
+      for (var i = 0; i < this.carts.length; i++) {
+        sum += parseFloat(this.carts[i].product_quantity) * parseFloat(this.carts[i].product_price);
+      }
+
+      return sum;
+    }
+  },
+  methods: {
+    // Cart Methods Here
+    AddToCart: function AddToCart(id) {
+      axios.get('/api/add-to-cart/' + id).then(function () {
+        Reload.$emit('AfterAction');
+        Notification.cart_success();
+      })["catch"]();
+    },
+    cartProduct: function cartProduct() {
+      var _this4 = this;
+
+      axios.get('/api/cart/product/').then(function (_ref) {
+        var data = _ref.data;
+        return _this4.carts = data;
+      })["catch"]();
+    },
+    removeItem: function removeItem(id) {
+      axios.get('/api/remove/cart/' + id).then(function () {
+        Reload.$emit('AfterAction');
+        Notification.cart_delete();
+      })["catch"]();
+    },
+    increment: function increment(id) {
+      axios.get('/api/increment/' + id).then(function () {
+        Reload.$emit('AfterAction');
+        Notification.success();
+      })["catch"]();
+    },
+    decrement: function decrement(id) {
+      axios.get('/api/decrement/' + id).then(function () {
+        Reload.$emit('AfterAction');
+        Notification.success();
+      })["catch"]();
+    },
+    vat: function vat() {
+      var _this5 = this;
+
+      axios.get('/api/vats/').then(function (_ref2) {
+        var data = _ref2.data;
+        return _this5.vats = data;
+      })["catch"]();
+    },
+    orderdone: function orderdone() {
+      var _this6 = this;
+
+      var total = this.subtotal * this.vats.vat / 100 + this.subtotal;
+      var data = {
+        qty: this.qty,
+        subtotal: this.subtotal,
+        customer_id: this.customer_id,
+        payby: this.payby,
+        pay: this.pay,
+        due: this.due,
+        vat: this.vats.vat,
+        total: total
+      };
+      axios.post('/api/order', data).then(function () {
+        Notification.success();
+
+        _this6.$router.push({
+          name: 'home'
+        });
+      });
+    },
+    // End Cart Methods
+    allProduct: function allProduct() {
+      var _this7 = this;
+
+      axios.get('/api/product/').then(function (_ref3) {
+        var data = _ref3.data;
+        return _this7.products = data;
+      })["catch"]();
+    },
+    allCategory: function allCategory() {
+      var _this8 = this;
+
+      axios.get('/api/category/').then(function (_ref4) {
+        var data = _ref4.data;
+        return _this8.categories = data;
+      })["catch"]();
+    },
+    allCustomer: function allCustomer() {
+      var _this9 = this;
+
+      axios.get('/api/customer/').then(function (_ref5) {
+        var data = _ref5.data;
+        return _this9.customers = data;
+      })["catch"](console.log('error'));
+    },
+    subproduct: function subproduct(id) {
+      var _this10 = this;
+
+      axios.get('/api/category/product/' + id).then(function (_ref6) {
+        var data = _ref6.data;
+        return _this10.getproducts = data;
+      })["catch"]();
+    }
   }
-}), _created$created$data);
+});
 
 /***/ }),
 
@@ -5194,8 +5193,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -5375,11 +5372,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -5434,19 +5432,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return _this2.errors = error.response.data.errors;
       });
     }
-  }
-}, "created", function created() {
-  var _this3 = this;
+  },
+  mounted: function mounted() {
+    var _this3 = this;
 
-  axios.get('/api/category/').then(function (_ref) {
-    var data = _ref.data;
-    return _this3.categories = data;
-  });
-  axios.get('/api/supplier/').then(function (_ref2) {
-    var data = _ref2.data;
-    return _this3.suppliers = data;
-  });
-}));
+    axios.get('/api/category/').then(function (_ref) {
+      var data = _ref.data;
+      return _this3.categories = data;
+    });
+    axios.get('/api/supplier/').then(function (_ref2) {
+      var data = _ref2.data;
+      return _this3.suppliers = data;
+    });
+  }
+});
 
 /***/ }),
 
@@ -5459,10 +5458,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -5630,11 +5625,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -5657,58 +5653,60 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       categories: {},
       suppliers: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/product/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error')); // Category Collected 
-
-  axios.get('/api/category/').then(function (_ref2) {
-    var data = _ref2.data;
-    return _this.categories = data;
-  }); // Supplier Collected 
-
-  axios.get('/api/supplier/').then(function (_ref3) {
-    var data = _ref3.data;
-    return _this.suppliers = data;
-  });
-}), _defineProperty(_created$data$created, "methods", {
-  onFileSelected: function onFileSelected(event) {
-    var _this2 = this;
-
-    var file = event.target.files[0];
-
-    if (file.size > 1048770) {
-      Notification.image_validation();
-    } else {
-      var reader = new FileReader();
-
-      reader.onload = function (event) {
-        _this2.form.newimage = event.target.result;
-      };
-
-      reader.readAsDataURL(file);
-    }
   },
-  ProductUpdate: function ProductUpdate() {
-    var _this3 = this;
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.patch('/api/product/' + id, this.form).then(function () {
-      _this3.$router.push({
-        name: 'product'
-      });
+    axios.get('/api/product/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error')); // Category Collected 
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this3.errors = error.response.data.errors;
+    axios.get('/api/category/').then(function (_ref2) {
+      var data = _ref2.data;
+      return _this.categories = data;
+    }); // Supplier Collected 
+
+    axios.get('/api/supplier/').then(function (_ref3) {
+      var data = _ref3.data;
+      return _this.suppliers = data;
     });
+  },
+  methods: {
+    onFileSelected: function onFileSelected(event) {
+      var _this2 = this;
+
+      var file = event.target.files[0];
+
+      if (file.size > 1048770) {
+        Notification.image_validation();
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+          _this2.form.newimage = event.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    ProductUpdate: function ProductUpdate() {
+      var _this3 = this;
+
+      var id = this.$route.params.id;
+      axios.patch('/api/product/' + id, this.form).then(function () {
+        _this3.$router.push({
+          name: 'product'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this3.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -5721,8 +5719,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -5794,11 +5790,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -5852,10 +5849,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
+  },
+  mounted: function mounted() {
+    this.allProduct();
   }
-}, "created", function created() {
-  this.allProduct();
-}));
+});
 
 /***/ }),
 
@@ -5868,10 +5866,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -5942,11 +5936,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -5957,31 +5952,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       errors: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/product/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {
-  StockUpdate: function StockUpdate() {
-    var _this2 = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.post('/api/stock/update/' + id, this.form).then(function () {
-      _this2.$router.push({
-        name: 'stock'
-      });
+    axios.get('/api/product/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {
+    StockUpdate: function StockUpdate() {
+      var _this2 = this;
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this2.errors = error.response.data.errors;
-    });
+      var id = this.$route.params.id;
+      axios.post('/api/stock/update/' + id, this.form).then(function () {
+        _this2.$router.push({
+          name: 'stock'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -5994,8 +5991,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -6067,11 +6062,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -6099,10 +6095,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return _this2.products = data;
       })["catch"]();
     }
+  },
+  mounted: function mounted() {
+    this.allProduct();
   }
-}, "created", function created() {
-  this.allProduct();
-}));
+});
 
 /***/ }),
 
@@ -6115,8 +6112,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -6184,11 +6179,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -6216,10 +6212,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return _this2.employees = data;
       })["catch"]();
     }
+  },
+  mounted: function mounted() {
+    this.allEmployee();
   }
-}, "created", function created() {
-  this.allEmployee();
-}));
+});
 
 /***/ }),
 
@@ -6232,10 +6229,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -6342,11 +6335,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -6356,35 +6350,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name: '',
         email: '',
         salary_month: '',
-        sallary: ''
+        salary: ''
       },
       errors: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/employee/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {
-  SalaryPaid: function SalaryPaid() {
-    var _this2 = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.post('/api/salary/paid/' + id, this.form).then(function () {
-      _this2.$router.push({
-        name: 'given-salary'
-      });
+    axios.get('/api/employee/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {
+    SalaryPaid: function SalaryPaid() {
+      var _this2 = this;
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this2.errors = error.response.data.errors;
-    });
+      var id = this.$route.params.id;
+      axios.post('/api/salary/paid/' + id, this.form).then(function () {
+        _this2.$router.push({
+          name: 'given-salary'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -6397,10 +6393,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -6515,11 +6507,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -6534,31 +6527,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       errors: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/edit/salary/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {
-  SalaryUpdate: function SalaryUpdate() {
-    var _this2 = this;
+  },
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.post('/api/salary/update/' + id, this.form).then(function () {
-      _this2.$router.push({
-        name: 'salary'
-      });
+    axios.get('/api/edit/salary/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {
+    SalaryUpdate: function SalaryUpdate() {
+      var _this2 = this;
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this2.errors = error.response.data.errors;
-    });
+      var id = this.$route.params.id;
+      axios.post('/api/salary/update/' + id, this.form).then(function () {
+        _this2.$router.push({
+          name: 'salary'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this2.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -6571,8 +6566,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -6632,11 +6625,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -6664,10 +6658,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return _this2.salaries = data;
       })["catch"]();
     }
+  },
+  mounted: function mounted() {
+    this.allSalary();
   }
-}, "created", function created() {
-  this.allSalary();
-}));
+});
 
 /***/ }),
 
@@ -6680,8 +6675,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -6748,11 +6741,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -6783,10 +6777,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return _this2.errors = error.response.data.errors;
       });
     }
+  },
+  mounted: function mounted() {
+    this.viewSalary();
   }
-}, "created", function created() {
-  this.viewSalary();
-}));
+});
 
 /***/ }),
 
@@ -6914,8 +6909,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -6978,10 +6974,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _created$data$created;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -7111,11 +7103,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_created$data$created = {
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -7132,48 +7125,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       errors: {}
     };
-  }
-}, _defineProperty(_created$data$created, "created", function created() {
-  var _this = this;
-
-  var id = this.$route.params.id;
-  axios.get('/api/supplier/' + id).then(function (_ref) {
-    var data = _ref.data;
-    return _this.form = data;
-  })["catch"](console.log('error'));
-}), _defineProperty(_created$data$created, "methods", {
-  onFileSelected: function onFileSelected(event) {
-    var _this2 = this;
-
-    var file = event.target.files[0];
-
-    if (file.size > 1048770) {
-      Notification.image_validation();
-    } else {
-      var reader = new FileReader();
-
-      reader.onload = function (event) {
-        _this2.form.newphoto = event.target.result;
-      };
-
-      reader.readAsDataURL(file);
-    }
   },
-  supplierUpdate: function supplierUpdate() {
-    var _this3 = this;
+  mounted: function mounted() {
+    var _this = this;
 
     var id = this.$route.params.id;
-    axios.patch('/api/supplier/' + id, this.form).then(function () {
-      _this3.$router.push({
-        name: 'supplier'
-      });
+    axios.get('/api/supplier/' + id).then(function (_ref) {
+      var data = _ref.data;
+      return _this.form = data;
+    })["catch"](console.log('error'));
+  },
+  methods: {
+    onFileSelected: function onFileSelected(event) {
+      var _this2 = this;
 
-      Notification.success();
-    })["catch"](function (error) {
-      return _this3.errors = error.response.data.errors;
-    });
+      var file = event.target.files[0];
+
+      if (file.size > 1048770) {
+        Notification.image_validation();
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+          _this2.form.newphoto = event.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    supplierUpdate: function supplierUpdate() {
+      var _this3 = this;
+
+      var id = this.$route.params.id;
+      axios.patch('/api/supplier/' + id, this.form).then(function () {
+        _this3.$router.push({
+          name: 'supplier'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        return _this3.errors = error.response.data.errors;
+      });
+    }
   }
-}), _created$data$created);
+});
 
 /***/ }),
 
@@ -7186,8 +7181,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -7255,11 +7248,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
+/* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
+      console.log("User not login");
       this.$router.push({
-        name: '/'
+        name: 'login'
       });
     }
   },
@@ -7313,10 +7307,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     }
+  },
+  mounted: function mounted() {
+    this.allSupplier();
   }
-}, "created", function created() {
-  this.allSupplier();
-}));
+});
 
 /***/ }),
 
@@ -51197,7 +51192,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-xl-10 col-lg-12 col-md-9" }, [
+    _c("div", { staticClass: "col-xl-5 col-lg-5 col-md-6" }, [
       _c("div", { staticClass: "card shadow-sm my-5" }, [
         _c("div", { staticClass: "card-body p-0" }, [
           _c("div", { staticClass: "row" }, [
@@ -52960,17 +52955,17 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.form.sallery,
-                                  expression: "form.sallery"
+                                  value: _vm.form.salary,
+                                  expression: "form.salary"
                                 }
                               ],
                               staticClass: "form-control",
                               attrs: {
                                 type: "text",
                                 id: "exampleInputFirstName",
-                                placeholder: "Enter Your Sallery"
+                                placeholder: "Enter Your Salary"
                               },
-                              domProps: { value: _vm.form.sallery },
+                              domProps: { value: _vm.form.salary },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
@@ -52978,17 +52973,17 @@ var render = function() {
                                   }
                                   _vm.$set(
                                     _vm.form,
-                                    "sallery",
+                                    "salary",
                                     $event.target.value
                                   )
                                 }
                               }
                             }),
                             _vm._v(" "),
-                            _vm.errors.sallery
+                            _vm.errors.salary
                               ? _c("small", { staticClass: "text-danger" }, [
                                   _vm._v(
-                                    " " + _vm._s(_vm.errors.sallery[0]) + " "
+                                    " " + _vm._s(_vm.errors.salary[0]) + " "
                                   )
                                 ])
                               : _vm._e()
@@ -53387,8 +53382,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.form.sallary,
-                                  expression: "form.sallary"
+                                  value: _vm.form.salary,
+                                  expression: "form.salary"
                                 }
                               ],
                               staticClass: "form-control",
@@ -53397,7 +53392,7 @@ var render = function() {
                                 id: "exampleInputFirstName",
                                 placeholder: "Enter Your Salary"
                               },
-                              domProps: { value: _vm.form.sallary },
+                              domProps: { value: _vm.form.salary },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
@@ -53405,7 +53400,7 @@ var render = function() {
                                   }
                                   _vm.$set(
                                     _vm.form,
-                                    "sallary",
+                                    "salary",
                                     $event.target.value
                                   )
                                 }
@@ -53717,7 +53712,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(employee.phone))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(employee.sallary))]),
+                      _c("td", [_vm._v(_vm._s(employee.salary))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(employee.joining_date))]),
                       _vm._v(" "),
@@ -57599,7 +57594,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(employee.phone))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(employee.sallary))]),
+                      _c("td", [_vm._v(_vm._s(employee.salary))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(employee.joining_date))]),
                       _vm._v(" "),
@@ -57928,8 +57923,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.form.sallary,
-                                  expression: "form.sallary"
+                                  value: _vm.form.salary,
+                                  expression: "form.salary"
                                 }
                               ],
                               staticClass: "form-control",
@@ -57938,7 +57933,7 @@ var render = function() {
                                 id: "exampleInputFirstName",
                                 placeholder: "Enter Your Salary"
                               },
-                              domProps: { value: _vm.form.sallary },
+                              domProps: { value: _vm.form.salary },
                               on: {
                                 input: function($event) {
                                   if ($event.target.composing) {
@@ -57946,17 +57941,17 @@ var render = function() {
                                   }
                                   _vm.$set(
                                     _vm.form,
-                                    "sallary",
+                                    "salary",
                                     $event.target.value
                                   )
                                 }
                               }
                             }),
                             _vm._v(" "),
-                            _vm.errors.sallary
+                            _vm.errors.salary
                               ? _c("small", { staticClass: "text-danger" }, [
                                   _vm._v(
-                                    " " + _vm._s(_vm.errors.sallary[0]) + " "
+                                    " " + _vm._s(_vm.errors.salary[0]) + " "
                                   )
                                 ])
                               : _vm._e()
@@ -58324,7 +58319,7 @@ var render = function() {
                               attrs: {
                                 type: "text",
                                 id: "exampleInputFirstName",
-                                placeholder: "Enter Your Sallery"
+                                placeholder: "Enter Your salary"
                               },
                               domProps: { value: _vm.form.amount },
                               on: {
@@ -59270,7 +59265,7 @@ var render = function() {
                               attrs: {
                                 type: "text",
                                 id: "exampleInputFirstName",
-                                placeholder: "Enter Your Sallery"
+                                placeholder: "Enter Your salary"
                               },
                               domProps: { value: _vm.form.shopname },
                               on: {

@@ -225,16 +225,17 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
 
-    created(){
-    this.allProduct();
-    this.allCategory();
-    this.allCustomer();
-    this.cartProduct();
-    this.vat();
+    mounted(){
+        this.allProduct();
+        this.allCategory();
+        this.allCustomer();
+        this.cartProduct();
+        this.vat();
     Reload.$on('AfterAction',() =>{
       this.cartProduct();
     })

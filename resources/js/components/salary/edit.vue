@@ -73,7 +73,7 @@
 
      <div class="col-md-6">
      	<label for="exampleFormControlSelect1"><b>Amount</b></label>
-         <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Sallery" v-model="form.amount">
+         <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your salary" v-model="form.amount">
          <small class="text-danger" v-if="errors.amount"> {{ errors.amount[0] }} </small>
             </div>     
             
@@ -117,7 +117,8 @@
   export default {
     created(){
       if (!User.loggedIn()) {
-        this.$router.push({name: '/'})
+        console.log("User not login");
+        this.$router.push({name: 'login'})
       }
     },
 
@@ -134,7 +135,7 @@
       errors:{}
     }
   },
-  created(){
+  mounted(){
   	let id = this.$route.params.id
   	axios.get('/api/edit/salary/'+id)
   	.then(({data}) => (this.form = data))
