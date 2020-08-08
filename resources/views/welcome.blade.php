@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   {{-- <link href="{{asset('backend/img/logo/logo.png')}}" rel="icon"> --}}
-  <title>E-Shop - Dashboard</title>
+  <title>E-Class - Dashboard</title>
   <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css')}}">
 
   <link href="{{asset('backend/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -30,7 +30,7 @@
             <div class="sidebar-brand-icon">
                 <img src="{{asset('backend/img/logo/logo2.png')}}">
                 </div>
-                <div class="sidebar-brand-text mx-3">E-Shop Admin</div>
+                <div class="sidebar-brand-text mx-3">E-Class Admin</div>
         </router-link>
 
 
