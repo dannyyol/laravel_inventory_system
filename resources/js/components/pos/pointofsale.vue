@@ -174,7 +174,7 @@
      <div class="row">
       <div class="col-lg-3 col-md-3 col-sm-6 col-6" v-for="getproduct in getfiltersearch" :key="getproduct.id">
             <button class="btn btn-sm" @click.prevent="AddToCart(getproduct.id)">
-             <div class="card" style="width: 8.5rem; margin-bottom: 5px;">
+             <div class="card" style="width: 8rem; margin-bottom: 5px;">
               <img :src="getproduct.image" id="em_photo" class="card-img-top">
               <div class="card-body">
                 <h6 class="card-title">{{ getproduct.product_name }}</h6>
