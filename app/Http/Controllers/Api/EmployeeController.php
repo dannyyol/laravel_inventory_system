@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Model\Employee;
 use Image;
 use DB;
+use File;
 class EmployeeController extends Controller
 {
     /**
@@ -144,7 +145,10 @@ class EmployeeController extends Controller
             $data['photo'] = $image_url;
             $img = DB::table('employees')->where('id',$id)->first();
             $image_path = $img->photo;
-            $done = unlink($image_path);
+            if($image_path){
+                $done = File::delete($image_path);
+            }
+            // $done = unlink($image_path);
             $user  = DB::table('employees')->where('id',$id)->update($data);
          }
 

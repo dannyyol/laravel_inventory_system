@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Model\Supplier;
 use Image;
 use DB;
+use File;
 
 class SupplierController extends Controller
 {
@@ -22,7 +23,7 @@ class SupplierController extends Controller
         return response()->json($supplier);
     }
 
-     
+
     /**
      * Store a newly created resource in storage.
      *
@@ -56,7 +57,7 @@ class SupplierController extends Controller
          $supplier->shopname = $request->shopname;
          $supplier->address = $request->address;
          $supplier->photo = $image_url;
-         $supplier->save(); 
+         $supplier->save();
      }else{
          $supplier = new Supplier;
          $supplier->name = $request->name;
@@ -64,10 +65,10 @@ class SupplierController extends Controller
          $supplier->phone = $request->phone;
          $supplier->shopname = $request->shopname;
          $supplier->address = $request->address;
-        
-         $supplier->save(); 
 
-     } 
+         $supplier->save();
+
+     }
 
     }
 
@@ -83,7 +84,7 @@ class SupplierController extends Controller
        return response()->json($supplier);
     }
 
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -100,7 +101,7 @@ class SupplierController extends Controller
         $data['phone'] = $request->phone;
         $data['shopname'] = $request->shopname;
         $data['address'] = $request->address;
-       
+
         $image = $request->newphoto;
 
         if ($image) {
@@ -113,15 +114,18 @@ class SupplierController extends Controller
          $upload_path = 'backend/supplier/';
          $image_url = $upload_path.$name;
          $success = $img->save($image_url);
-         
+
          if ($success) {
             $data['photo'] = $image_url;
             $img = DB::table('suppliers')->where('id',$id)->first();
             $image_path = $img->photo;
-            $done = unlink($image_path);
+            // $done = unlink($image_path);
+            if($image_path){
+                $done = File::delete($image_path);
+            }
             $user  = DB::table('suppliers')->where('id',$id)->update($data);
          }
-          
+
         }else{
             $oldphoto = $request->photo;
             $data['photo'] = $oldphoto;

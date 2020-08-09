@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Model\Customer;
 use Image;
-
+use File;
 class CustomerController extends Controller
 {
     /**
@@ -21,7 +21,7 @@ class CustomerController extends Controller
        return response()->json($customer);
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -54,17 +54,17 @@ class CustomerController extends Controller
          $customer->phone = $request->phone;
          $customer->address = $request->address;
          $customer->photo = $image_url;
-         $customer->save(); 
+         $customer->save();
      }else{
          $customer = new Customer;
          $customer->name = $request->name;
          $customer->email = $request->email;
          $customer->phone = $request->phone;
          $customer->address = $request->address;
-        
-         $customer->save(); 
 
-     } 
+         $customer->save();
+
+     }
 
 
     }
@@ -81,7 +81,7 @@ class CustomerController extends Controller
        return response()->json($customer);
     }
 
-     
+
 
     /**
      * Update the specified resource in storage.
@@ -109,15 +109,18 @@ class CustomerController extends Controller
          $upload_path = 'backend/customer/';
          $image_url = $upload_path.$name;
          $success = $img->save($image_url);
-         
+
          if ($success) {
             $data['photo'] = $image_url;
             $img = DB::table('customers')->where('id',$id)->first();
             $image_path = $img->photo;
-            $done = unlink($image_path);
+            // $done = unlink($image_path);
+            if($image_path){
+                $done = File::delete($image_path);
+            }
             $user  = Customer::where('id',$id)->update($data);
          }
-          
+
         }else{
             $oldphoto = $request->photo;
             $data['photo'] = $oldphoto;

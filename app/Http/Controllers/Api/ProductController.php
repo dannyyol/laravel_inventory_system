@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\Product;
 use Image;
 use DB;
+use File;
 
 class ProductController extends Controller
 {
@@ -26,7 +27,7 @@ class ProductController extends Controller
             return response()->json($product);
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -69,7 +70,7 @@ class ProductController extends Controller
          $product->buying_date = $request->buying_date;
          $product->product_quantity = $request->product_quantity;
          $product->image = $image_url;
-         $product->save(); 
+         $product->save();
      }else{
         $product = new Product;
          $product->category_id = $request->category_id;
@@ -81,11 +82,11 @@ class ProductController extends Controller
          $product->supplier_id = $request->supplier_id;
          $product->buying_date = $request->buying_date;
          $product->product_quantity = $request->product_quantity;
-         
-         $product->save(); 
 
-     } 
- 
+         $product->save();
+
+     }
+
 
 
     }
@@ -102,7 +103,7 @@ class ProductController extends Controller
        return response()->json($product);
     }
 
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -126,24 +127,26 @@ class ProductController extends Controller
         $image = $request->newimage;
 
         if ($image) {
-         $position = strpos($image, ';');
-         $sub = substr($image, 0, $position);
-         $ext = explode('/', $sub)[1];
+            $position = strpos($image, ';');
+            $sub = substr($image, 0, $position);
+            $ext = explode('/', $sub)[1];
 
-         $name = time().".".$ext;
-         $img = Image::make($image)->resize(240,200);
-         $upload_path = 'backend/product/';
-         $image_url = $upload_path.$name;
-         $success = $img->save($image_url);
-         
+            $name = time().".".$ext;
+            $img = Image::make($image)->resize(240,200);
+            $upload_path = 'backend/product/';
+            $image_url = $upload_path.$name;
+            $success = $img->save($image_url);
+
          if ($success) {
             $data['image'] = $image_url;
             $img = DB::table('products')->where('id',$id)->first();
             $image_path = $img->image;
-            $done = unlink($image_path);
+            if($image_path){
+                $done = File::delete($image_path);
+            }
             $user  = DB::table('products')->where('id',$id)->update($data);
          }
-          
+
         }else{
             $oldphoto = $request->image;
             $data['image'] = $oldphoto;
@@ -174,7 +177,7 @@ class ProductController extends Controller
         $data = [];
         $data['product_quantity'] = $request->product_quantity;
         Product::where('id',$id)->update($data);
-    
+
      }
-    
+
 }
