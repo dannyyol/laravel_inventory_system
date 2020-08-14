@@ -22,6 +22,20 @@ Route::group([
 
 });
 
+Route::group(['middleware' => 'guest:api'], function () {
+    // Route::post('login', 'Auth\LoginController@login');
+    // Route::post('register', 'Auth\RegisterController@register');
+
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+    Route::post('email/verify/{user}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::post('email/resend', 'Auth\VerificationController@resend');
+
+    Route::post('facebook/{driver}', 'Api\Socialites\SocialAuthFacebookController@redirectToProvider');
+    Route::get('oauth/{driver}/callback', 'Api\Socialites\SocialAuthFacebookController@handleProviderCallback')->name('oauth.callback');
+});
+
 Route::apiResource('/employee', 'Api\EmployeeController');
 Route::apiResource('/supplier', 'Api\SupplierController');
 Route::apiResource('/category', 'Api\CategoryController');

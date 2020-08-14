@@ -19,10 +19,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware', 'auth'], function(){
+// Socalite Authentication google
+Route::get('/google/redirect', 'Socialites\SocialAuthGoogleController@redirect');
+Route::get('/call_back', 'Socialites\SocialAuthGoogleController@call_back');
+// Socalite Authentication facebook
+Route::get('/redirect', 'Socialites\SocialAuthFacebookController@redirect');
+Route::get('/callback', 'Socialites\SocialAuthFacebookController@callback');
 
-    Route::get('/{vue_capture?}', function(){
-        return view('welcome');
-    })->where('vue_capture', '[\/\w\.-]*');
 
-});
+Route::get('/{vue_capture?}', function(){
+    return view('welcome');
+})->where('vue_capture', '[\/\w\.-]*');

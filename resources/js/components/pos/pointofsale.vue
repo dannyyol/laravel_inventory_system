@@ -177,7 +177,7 @@
              <div class="card" style="width: 8rem; margin-bottom: 5px;">
               <img :src="getproduct.image" id="em_photo" class="card-img-top">
               <div class="card-body">
-                <h6 class="card-title">{{ getproduct.product_name }}</h6>
+                <h6 class="card-title" v-if="getproduct.product_name.length <= 10">{{ getproduct.product_name }}</h6>
                 <span class="badge badge-success" v-if="getproduct.product_quantity  >= 1 ">Available {{ getproduct.product_quantity }}  </span>
                 <span class="badge badge-danger" v-else=" ">Stock Out </span>
 

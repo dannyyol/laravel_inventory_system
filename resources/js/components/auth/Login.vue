@@ -35,10 +35,10 @@
                                 <button type="submit" class="btn btn-primary btn-block">Login </button>
                             </div>
                             <hr>
-                            <a href="index.html" class="btn btn-google btn-block">
+                            <a href="" class="btn btn-google btn-block">
                             <i class="fab fa-google fa-fw"></i> Login with Google
                             </a>
-                            <a href="index.html" class="btn btn-facebook btn-block">
+                            <a href="" class="btn btn-facebook btn-block">
                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                             </a>
                         </form>
@@ -64,6 +64,14 @@
 
 <script>
 export default {
+    // Waiting for the callback.blade.php message... (token and username).
+    mounted () {
+        window.addEventListener('message', this.onMessage, false)
+    },
+
+    beforeDestroy () {
+        window.removeEventListener('message', this.onMessage)
+    },
 
     data(){
         return {
@@ -92,13 +100,67 @@ export default {
                 icon: 'warning',
                 title: 'Invalid Email or Password'
             }))
-        }
+        },
+
+
+        // This method call the function to launch the popup and makes the request to the controller. 
+        loginGoogle () {
+            const newWindow = openWindow('', 'message')
+            axios.post('api/login-google')
+                .then(response => {
+                    newWindow.location.href = response.data;
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
+            },
+            // This method save the new token and username
+            onMessage (e) {
+            if (e.origin !== window.origin || !e.data.token) {
+                return
+            }
+            localStorage.setItem('user',e.data.name)
+            localStorage.setItem('jwt',e.data.token)
+
+            this.$router.go('/board')
+            }
+        
     },
     created(){
         if(User.loggedIn()){
             this.$router.push({name: 'home'});
         }
     }
-    
 }
+
+function openWindow (url, title, options = {}) {
+      if (typeof url === 'object') {
+        options = url
+        url = ''
+      }
+
+      options = { url, title, width: 600, height: 720, ...options }
+
+      const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screen.left
+      const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screen.top
+      const width = window.innerWidth || document.documentElement.clientWidth || window.screen.width
+      const height = window.innerHeight || document.documentElement.clientHeight || window.screen.height
+
+      options.left = ((width / 2) - (options.width / 2)) + dualScreenLeft
+      options.top = ((height / 2) - (options.height / 2)) + dualScreenTop
+
+      const optionsStr = Object.keys(options).reduce((acc, key) => {
+        acc.push(`${key}=${options[key]}`)
+        return acc
+      }, []).join(',')
+
+      const newWindow = window.open(url, title, optionsStr)
+
+      if (window.focus) {
+        newWindow.focus()
+      }
+
+      return newWindow
+    }
+
 </script>

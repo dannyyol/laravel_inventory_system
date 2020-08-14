@@ -2133,6 +2133,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 //
 //
 //
@@ -2198,6 +2206,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // Waiting for the callback.blade.php message... (token and username).
+  mounted: function mounted() {
+    window.addEventListener('message', this.onMessage, false);
+  },
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener('message', this.onMessage);
+  },
   data: function data() {
     return {
       form: {
@@ -2227,6 +2242,25 @@ __webpack_require__.r(__webpack_exports__);
         icon: 'warning',
         title: 'Invalid Email or Password'
       }));
+    },
+    // This method call the function to launch the popup and makes the request to the controller. 
+    loginGoogle: function loginGoogle() {
+      var newWindow = openWindow('', 'message');
+      axios.post('api/login-google').then(function (response) {
+        newWindow.location.href = response.data;
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    // This method save the new token and username
+    onMessage: function onMessage(e) {
+      if (e.origin !== window.origin || !e.data.token) {
+        return;
+      }
+
+      localStorage.setItem('user', e.data.name);
+      localStorage.setItem('jwt', e.data.token);
+      this.$router.go('/board');
     }
   },
   created: function created() {
@@ -2237,6 +2271,39 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+function openWindow(url, title) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (_typeof(url) === 'object') {
+    options = url;
+    url = '';
+  }
+
+  options = _objectSpread({
+    url: url,
+    title: title,
+    width: 600,
+    height: 720
+  }, options);
+  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screen.left;
+  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screen.top;
+  var width = window.innerWidth || document.documentElement.clientWidth || window.screen.width;
+  var height = window.innerHeight || document.documentElement.clientHeight || window.screen.height;
+  options.left = width / 2 - options.width / 2 + dualScreenLeft;
+  options.top = height / 2 - options.height / 2 + dualScreenTop;
+  var optionsStr = Object.keys(options).reduce(function (acc, key) {
+    acc.push("".concat(key, "=").concat(options[key]));
+    return acc;
+  }, []).join(',');
+  var newWindow = window.open(url, title, optionsStr);
+
+  if (window.focus) {
+    newWindow.focus();
+  }
+
+  return newWindow;
+}
 
 /***/ }),
 
@@ -51018,10 +51085,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "a",
-      {
-        staticClass: "btn btn-google btn-block",
-        attrs: { href: "index.html" }
-      },
+      { staticClass: "btn btn-google btn-block", attrs: { href: "" } },
       [
         _c("i", { staticClass: "fab fa-google fa-fw" }),
         _vm._v(" Login with Google\n                        ")
@@ -51034,10 +51098,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "a",
-      {
-        staticClass: "btn btn-facebook btn-block",
-        attrs: { href: "index.html" }
-      },
+      { staticClass: "btn btn-facebook btn-block", attrs: { href: "" } },
       [
         _c("i", { staticClass: "fab fa-facebook-f fa-fw" }),
         _vm._v(" Login with Facebook\n                        ")
@@ -51425,10 +51486,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "a",
-      {
-        staticClass: "btn btn-google btn-block",
-        attrs: { href: "index.html" }
-      },
+      { staticClass: "btn btn-google btn-block", attrs: { href: "" } },
       [
         _c("i", { staticClass: "fab fa-google fa-fw" }),
         _vm._v(" Register with Google\n                ")
@@ -51441,10 +51499,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "a",
-      {
-        staticClass: "btn btn-facebook btn-block",
-        attrs: { href: "index.html" }
-      },
+      { staticClass: "btn btn-facebook btn-block", attrs: { href: "" } },
       [
         _c("i", { staticClass: "fab fa-facebook-f fa-fw" }),
         _vm._v(" Register with Facebook\n                ")
@@ -55650,7 +55705,7 @@ var render = function() {
                                     {
                                       staticClass: "card",
                                       staticStyle: {
-                                        width: "8.5rem",
+                                        width: "8rem",
                                         "margin-bottom": "5px"
                                       }
                                     },
@@ -55664,15 +55719,19 @@ var render = function() {
                                       }),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "card-body" }, [
-                                        _c(
-                                          "h6",
-                                          { staticClass: "card-title" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(getproduct.product_name)
+                                        getproduct.product_name.length <= 10
+                                          ? _c(
+                                              "h6",
+                                              { staticClass: "card-title" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    getproduct.product_name
+                                                  )
+                                                )
+                                              ]
                                             )
-                                          ]
-                                        ),
+                                          : _vm._e(),
                                         _vm._v(" "),
                                         getproduct.product_quantity >= 1
                                           ? _c(
